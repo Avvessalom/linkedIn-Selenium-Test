@@ -6,6 +6,9 @@ import org.openqa.selenium.support.FindBy
 import org.openqa.selenium.support.PageFactory
 
 class MainPage(driver: WebDriver) {
+    @FindBy(xpath = "//a[@data-tracking-control-name='guest_homepage-basic_nav-header-logo']")
+    lateinit var logo: WebElement
+
     @FindBy(className = "nav__button-secondary")
     lateinit var navButtonEnter: WebElement
 
