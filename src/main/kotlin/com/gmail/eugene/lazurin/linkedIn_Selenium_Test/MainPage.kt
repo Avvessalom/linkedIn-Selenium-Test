@@ -6,10 +6,10 @@ import org.openqa.selenium.support.FindBy
 import org.openqa.selenium.support.PageFactory
 
 class MainPage(driver: WebDriver) {
-    @FindBy(css = "nav__button-secondary")
+    @FindBy(className = "nav__button-secondary")
     lateinit var navButtonEnter: WebElement
 
-    @FindBy(css = "nav__button-tertiary")
+    @FindBy(className = "nav__button-tertiary")
     lateinit var navButtonJoin: WebElement
 
     @FindBy(id = "session_key")
