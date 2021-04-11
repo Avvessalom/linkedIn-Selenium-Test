@@ -12,7 +12,7 @@ class MainUserPage(driver: WebDriver) {
     @FindBy(xpath = "//span[text()[normalize-space()='Главная']]")
     lateinit var main: WebElement
 
-    @FindBy(id = "ember23")
+    @FindBy(xpath = "//a[@data-test-global-nav-link='mynetwork']")
     lateinit var wide: WebElement
 
     @FindBy(xpath = "//span[text()[normalize-space()='Вакансии']]")
