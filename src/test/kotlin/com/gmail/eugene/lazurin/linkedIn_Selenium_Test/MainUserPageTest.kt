@@ -11,6 +11,7 @@ import org.openqa.selenium.interactions.Actions
 import org.openqa.selenium.support.ui.ExpectedConditions
 import org.openqa.selenium.support.ui.WebDriverWait
 import java.util.concurrent.TimeUnit
+import javax.security.auth.login.Configuration
 
 class MainUserPageTest {
     private lateinit var driver: WebDriver
@@ -67,5 +68,22 @@ class MainUserPageTest {
         val post = driver.findElements(By.xpath("//div[contains(@class,'feed-shared-text relative')]"))[0].text
         println(post)
         assertTrue(post.contains("Test Post 1 #testHashtag1"))
+    }
+
+    @Test
+    fun findNewJob() {
+        loginPage.username.sendKeys(ConfProperties.getProperty("login"))
+        loginPage.pass.sendKeys(ConfProperties.getProperty("pass"))
+        loginPage.submit.click()
+        mainUserPage.vacancy.click()
+        driver.findElement(By.xpath("//input[@class='jobs-search-box__text-input jobs-search-box__keyboard-text-input']")).sendKeys("developer")
+        val citySearch = driver.findElement(By.xpath("//input[@class='jobs-search-box__text-input jobs-search-box__ghost-text-input']"))
+        val builder = Actions(driver)
+        builder.moveToElement(citySearch).click(citySearch)
+        builder.sendKeys("St Petersburg" + Keys.ENTER)
+        builder.perform()
+        val post = driver.findElements(By.xpath("//li[@class='jobs-search-results__list-item occludable-update p0 relative ember-view']"))[0].text
+        print(post)
+        assertTrue(post.contains("developer") || post.contains("Developer"))
     }
 }
