@@ -121,6 +121,24 @@ class MainUserPageTest {
         assertEquals(
             testMeeting, "\n      testMeeting\n    "
         )
-        println(testMeeting)
+    }
+
+    @Test
+    fun deleteMeeting() {
+        loginPage.username.sendKeys(ConfProperties.getProperty("login"))
+        loginPage.pass.sendKeys(ConfProperties.getProperty("pass"))
+        loginPage.submit.click()
+        mainUserPage.wide.click()
+        driver.findElement(By.xpath("//a[@data-control-name='nav.mynetwork']")).click()
+        driver.findElement(By.xpath("//a[@data-control-name='events']")).click()
+        driver.findElement(By.xpath("//a[@class='app-aware-link']")).click()
+
+        driver.findElement(By.xpath("/html/body/div[8]/div[3]/div[1]/section/div/div[1]/div[2]/button")).click()
+        driver.findElement(By.cssSelector("html>body>div:nth-of-type(8)>div:nth-of-type(3)>div>section>div>div>div:nth-of-type(2)>div>div>ul>li:nth-of-type(4)>div>div")).click()
+        driver.findElement(By.xpath("//span[text()[normalize-space()='Удалить мероприятие']]")).click()
+        mainUserPage.wide.click()
+        driver.findElement(By.xpath("//a[@data-control-name='nav.mynetwork']")).click()
+        val clear = driver.findElement(By.xpath("/html/body/div[8]/div[3]/div/div/div/div/div/div/div/main/div/div[2]/section/h1")).getAttribute("innerHTML")
+        assertEquals(clear, "\n    Мероприятий нет\n  ")
     }
 }
