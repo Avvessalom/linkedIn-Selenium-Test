@@ -47,10 +47,12 @@ class GuestHomePageTest {
         mainPage.logo.click()
         guestPage.search.click()
         WebDriverWait(driver, 5).until(ExpectedConditions.titleContains("Вакансии"))
-        val searchField = driver.findElement(By.xpath("//input[@type='search' and @placeholder='Поиск должностей или компаний']"))
+        val searchField =
+            driver.findElement(By.xpath("//input[@type='search' and @placeholder='Поиск должностей или компаний']"))
         searchField.sendKeys("JetBrains" + Keys.ENTER)
 
-        val searchedPageField = driver.findElement(By.xpath("//input[@type='search' and @placeholder='Поиск должностей или компаний']"))
+        val searchedPageField =
+            driver.findElement(By.xpath("//input[@type='search' and @placeholder='Поиск должностей или компаний']"))
         assertEquals("JetBrains", searchedPageField.getAttribute("value"))
     }
 
@@ -58,11 +60,13 @@ class GuestHomePageTest {
     fun searchLearning() {
         mainPage.logo.click()
         guestPage.learning.click()
-        WebDriverWait(driver,5).until(ExpectedConditions.titleContains("Онлайн-курсы"))
-        val searchField = driver.findElement(By.xpath("//input[@data-tracking-control-name='learning-serp_learning-search-bar_keywords_dismissable-input']"))
+        WebDriverWait(driver, 5).until(ExpectedConditions.titleContains("Онлайн-курсы"))
+        val searchField =
+            driver.findElement(By.xpath("//input[@data-tracking-control-name='learning-serp_learning-search-bar_keywords_dismissable-input']"))
         searchField.sendKeys("Selenium" + Keys.ENTER)
 
-        val searchedPageField = driver.findElement(By.xpath("//input[@data-tracking-control-name='learning-serp_learning-search-bar_keywords_dismissable-input']"))
+        val searchedPageField =
+            driver.findElement(By.xpath("//input[@data-tracking-control-name='learning-serp_learning-search-bar_keywords_dismissable-input']"))
         assertEquals("Selenium", searchedPageField.getAttribute("value"))
     }
 }
