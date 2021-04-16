@@ -1,9 +1,8 @@
 package com.gmail.eugene.lazurin.linkedIn_Selenium_Test
 
-import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.Assertions.assertTrue
 import org.openqa.selenium.By
 import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.Keys
@@ -14,8 +13,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions
 import org.openqa.selenium.support.ui.Select
 import org.openqa.selenium.support.ui.WebDriverWait
 import java.util.concurrent.TimeUnit
-
-
 
 
 class MainUserPageTest {
@@ -184,5 +181,13 @@ class MainUserPageTest {
         val guy = driver.findElement(By.xpath("//span/div//span/a")).click()
         jsExecutor.executeScript("window.scrollBy(0,1500);")
         assertTrue(driver.title.contains("Vitaliy Prikota"))
+    }
+
+    @Test
+    fun watchNotification() {
+        loginPage.login()
+        mainUserPage.notifications.click()
+        driver.findElements(By.xpath("//section[@class='nt-segment nt-segment--combined artdeco-card']/div/article/div/a"))[1].click()
+        WebDriverWait(driver, 5).until { !driver.title.equals("Уведомления | LinkedIn") }
     }
 }
