@@ -5,14 +5,22 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.openqa.selenium.By
+import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.Keys
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.interactions.Actions
 import org.openqa.selenium.support.ui.ExpectedConditions
+import org.openqa.selenium.support.ui.Select
 import org.openqa.selenium.support.ui.WebDriverWait
 import java.util.concurrent.TimeUnit
 import javax.security.auth.login.Configuration
+import jdk.nashorn.internal.runtime.regexp.joni.constants.Arguments
+
+import sun.font.Script
+
+
+
 
 class MainUserPageTest {
     private lateinit var driver: WebDriver
@@ -143,5 +151,31 @@ class MainUserPageTest {
             driver.findElement(By.xpath("/html/body/div[8]/div[3]/div/div/div/div/div/div/div/main/div/div[2]/section/h1"))
                 .getAttribute("innerHTML")
         assertEquals(clear, "\n    Мероприятий нет\n  ")
+    }
+
+    //TODO update scrolling
+    @Test
+    fun changeUniversity() {
+        val jsExecutor = driver as JavascriptExecutor
+
+        loginPage.username.sendKeys(ConfProperties.getProperty("login"))
+        loginPage.pass.sendKeys(ConfProperties.getProperty("pass"))
+        loginPage.submit.click()
+        driver.findElement(By.xpath("//a//div[@data-control-name='identity_welcome_message']")).click()
+        WebDriverWait(driver, 5).until(ExpectedConditions.titleContains("| LinkedIn"))
+        jsExecutor.executeScript("window.scrollBy(0,1500);")
+        val newEdu = driver.findElement(By.xpath("//a[@data-control-name='add_education']")).click()
+        val university = driver.findElement(By.id("edu-school-typeahead")).sendKeys("test")
+        val edu = driver.findElement(By.id("edu-degree-typeahead")).sendKeys("бакалавр")
+        val fieldOfStudy = driver.findElement(By.id("edu-field-of-study-typeahead")).sendKeys("очень умный чел")
+        val selectStartYear = Select(driver.findElement(By.id("pe-education-form__start-year"))).selectByValue("2000")
+        val selectEndYear = Select(driver.findElement(By.id("pe-education-form__end-year"))).selectByValue("2005")
+        val eduGrade = driver.findElement(By.id("edu-grade")).sendKeys("5.0")
+        val eduActivityes = driver.findElement(By.id("edu-activities-societies")).sendKeys("отдыхал отдых, делал дела")
+        val eduDescription = driver.findElement(By.id("edu-description"))
+            .sendKeys("Тестовое описание тестового университета, получается")
+        val send =
+            driver.findElement(By.xpath("//footer//button[@type='submit']"))
+                .click()
     }
 }
