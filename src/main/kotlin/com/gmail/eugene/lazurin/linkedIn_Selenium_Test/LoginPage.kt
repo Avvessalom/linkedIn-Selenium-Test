@@ -15,6 +15,11 @@ class LoginPage(driver: WebDriver) {
     @FindBy(xpath = "//button[@data-litms-control-urn='login-submit']")
     lateinit var submit: WebElement
 
+    fun login() {
+        username.sendKeys(ConfProperties.getProperty("login"))
+        pass.sendKeys(ConfProperties.getProperty("pass"))
+        submit.click()
+    }
     init {
         PageFactory.initElements(driver, this)
     }
