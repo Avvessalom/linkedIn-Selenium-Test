@@ -14,10 +14,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions
 import org.openqa.selenium.support.ui.Select
 import org.openqa.selenium.support.ui.WebDriverWait
 import java.util.concurrent.TimeUnit
-import javax.security.auth.login.Configuration
-import jdk.nashorn.internal.runtime.regexp.joni.constants.Arguments
-
-import sun.font.Script
 
 
 
@@ -177,5 +173,16 @@ class MainUserPageTest {
         val send =
             driver.findElement(By.xpath("//footer//button[@type='submit']"))
                 .click()
+    }
+
+    @Test
+    fun `spy the guy`() {
+        val jsExecutor = driver as JavascriptExecutor
+
+        loginPage.login()
+        mainUserPage.searchFIeld.sendKeys("Vitaliy Prikota" + Keys.ENTER)
+        val guy = driver.findElement(By.xpath("//span/div//span/a")).click()
+        jsExecutor.executeScript("window.scrollBy(0,1500);")
+        assertTrue(driver.title.contains("Vitaliy Prikota"))
     }
 }
