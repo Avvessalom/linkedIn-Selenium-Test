@@ -4,6 +4,7 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.openqa.selenium.By
 import org.openqa.selenium.Keys
 import org.openqa.selenium.WebDriver
@@ -54,6 +55,74 @@ class GuestHomePageTest {
         val searchedPageField =
             driver.findElement(By.xpath("//input[@type='search' and @placeholder='Поиск должностей или компаний']"))
         assertEquals("JetBrains", searchedPageField.getAttribute("value"))
+    }
+
+    @Test
+    fun `search typo job`() {
+        mainPage.logo.click()
+        guestPage.search.click()
+        WebDriverWait(driver, 5).until(ExpectedConditions.titleContains("Вакансии"))
+        val searchField =
+            driver.findElement(By.xpath("//input[@type='search' and @placeholder='Поиск должностей или компаний']"))
+        searchField.sendKeys("JetBraiis" + Keys.ENTER)
+
+        val searchedPageField =
+            driver.findElement(By.xpath("//input[@type='search' and @placeholder='Поиск должностей или компаний']"))
+        assertEquals("JetBrains", searchedPageField.getAttribute("value"))
+    }
+
+    @Test
+    fun `search bad words`() {
+        mainPage.logo.click()
+        guestPage.search.click()
+        WebDriverWait(driver, 5).until(ExpectedConditions.titleContains("Вакансии"))
+        val searchField =
+            driver.findElement(By.xpath("//input[@type='search' and @placeholder='Поиск должностей или компаний']"))
+        searchField.sendKeys("!@#$%^&*(" + Keys.ENTER)
+
+        val searchedPageField =
+            driver.findElement(By.xpath("//input[@type='search' and @placeholder='Поиск должностей или компаний']"))
+        assertEquals("!@#$%^&*(", searchedPageField.getAttribute("value"))
+    }
+
+    @Test
+    fun `search numbers`() {
+        mainPage.logo.click()
+        guestPage.search.click()
+        WebDriverWait(driver, 5).until(ExpectedConditions.titleContains("Вакансии"))
+        val searchField =
+            driver.findElement(By.xpath("//input[@type='search' and @placeholder='Поиск должностей или компаний']"))
+        searchField.sendKeys(
+            "111111111111111111111111111111111111111111111111111111111111111111111111111111111"
+                    + "111111111111111111111111111111111111111111111111111111111111111111111111111111111"
+                    + "111111111111111111111111111111111111111111111111111111111111111111111111111111111"
+                    + "111111111111111111111111111111111111111111111111111111111111111111111111111111111"
+                    + Keys.ENTER
+        )
+
+        val searchedPageField =
+            driver.findElement(By.xpath("//input[@type='search' and @placeholder='Поиск должностей или компаний']"))
+        assertEquals(
+            "111111111111111111111111111111111111111111111111111111111111111111111111111111111"
+                    + "111111111111111111111111111111111111111111111111111111111111111111111111111111111"
+                    + "111111111111111111111111111111111111111111111111111111111111111111111111111111111"
+                    + "111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+            searchedPageField.getAttribute("value")
+        )
+    }
+
+    @Test
+    fun `search 小米 job`() {
+        mainPage.logo.click()
+        guestPage.search.click()
+        WebDriverWait(driver, 5).until(ExpectedConditions.titleContains("Вакансии"))
+        val searchField =
+            driver.findElement(By.xpath("//input[@type='search' and @placeholder='Поиск должностей или компаний']"))
+        searchField.sendKeys("小米" + Keys.ENTER)
+
+        val searchedPageField =
+            driver.findElement(By.xpath("//input[@type='search' and @placeholder='Поиск должностей или компаний']"))
+        assertTrue(driver.pageSource.contains("Xiaomi"))
     }
 
     @Test

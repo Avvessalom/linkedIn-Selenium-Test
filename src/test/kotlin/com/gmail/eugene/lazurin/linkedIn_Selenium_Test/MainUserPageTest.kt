@@ -184,10 +184,30 @@ class MainUserPageTest {
     }
 
     @Test
+    fun getContact() {
+        loginPage.login()
+        mainUserPage.searchFIeld.sendKeys("Vitaliy Prikota" + Keys.ENTER)
+        val guy = driver.findElement(By.xpath("//span/div//span/a")).click()
+        val getCont =
+            driver.findElement(By.xpath("//div[@class='display-flex justify-flex-end align-items-center']//div[contains(@class, ember)]//button[contains(@aria-label,'Установить контакт')]"))
+                .click()
+        val pers = driver.findElement(By.xpath("//button[contains(@aria-label,'Персонализировать')]")).click()
+        val message = driver.findElement(By.id("custom-message")).sendKeys("Здарова")
+        val send = driver.findElement(By.xpath("//button[contains(@aria-label,'Отправить сейчас')]")).click()
+
+    }
+
+    @Test
     fun watchNotification() {
         loginPage.login()
         mainUserPage.notifications.click()
         driver.findElements(By.xpath("//section[@class='nt-segment nt-segment--combined artdeco-card']/div/article/div/a"))[1].click()
         WebDriverWait(driver, 5).until { !driver.title.equals("Уведомления | LinkedIn") }
+    }
+
+    @Test
+    fun writeMessage() {
+        loginPage.login()
+
     }
 }
