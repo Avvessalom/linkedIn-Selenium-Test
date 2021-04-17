@@ -1,5 +1,6 @@
 package com.gmail.eugene.lazurin.linkedIn_Selenium_Test
 
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -35,10 +36,10 @@ class MainUserPageTest {
         loginPage = LoginPage(driver)
     }
 
-//    @AfterEach
-//    fun tearDown() {
-//        driver.quit()
-//    }
+    @AfterEach
+    fun tearDown() {
+        driver.quit()
+    }
 
     @Test
     fun search() {
@@ -51,6 +52,42 @@ class MainUserPageTest {
         mainUserPage.wide.click()
         driver.findElement(By.xpath("//a[@data-control-name='companies']")).click()
         assertTrue(driver.pageSource.contains("JetBrains"))
+    }
+
+    @Test
+    fun `search bad company`() {
+        loginPage.login()
+        mainUserPage.searchFIeld.sendKeys("JetBraiins" + Keys.ENTER)
+        WebDriverWait(driver, 5).until(ExpectedConditions.titleContains("JetBraiins"))
+        val main = driver.findElement(By.xpath("//main")).text
+        assertFalse(main.contains("JetBraiis"))
+    }
+
+    @Test
+    fun `search 小米 company`() {
+        loginPage.login()
+        mainUserPage.searchFIeld.sendKeys("小米" + Keys.ENTER)
+        WebDriverWait(driver, 5).until(ExpectedConditions.titleContains("小米"))
+        val main = driver.findElement(By.xpath("//main")).text
+        assertTrue(main.contains("Xiaomi"))
+    }
+
+    @Test
+    fun `search numbers company`() {
+        loginPage.login()
+        mainUserPage.searchFIeld.sendKeys("111111111111111111111111111111111111111111111111111111111111111" + Keys.ENTER)
+        WebDriverWait(driver, 5).until(ExpectedConditions.titleContains("111111111111111111111111111111111111111111111111111111111111111"))
+        val main = driver.findElement(By.xpath("//main")).text
+        assertFalse(main.contains("111111111111111111111111111111111111111111111111111111111111111"))
+    }
+
+    @Test
+    fun `search bad symbols`() {
+        loginPage.login()
+        mainUserPage.searchFIeld.sendKeys("!@#$%^&*(" + Keys.ENTER)
+        WebDriverWait(driver, 5).until(ExpectedConditions.titleContains("!@#$%^&*("))
+        val main = driver.findElement(By.xpath("//main")).text
+        assertFalse(main.contains(""))
     }
 
     @Test
@@ -208,6 +245,5 @@ class MainUserPageTest {
     @Test
     fun writeMessage() {
         loginPage.login()
-
     }
 }

@@ -1,10 +1,9 @@
 package com.gmail.eugene.lazurin.linkedIn_Selenium_Test
 
 import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
 import org.openqa.selenium.By
 import org.openqa.selenium.Keys
 import org.openqa.selenium.WebDriver
@@ -123,6 +122,21 @@ class GuestHomePageTest {
         val searchedPageField =
             driver.findElement(By.xpath("//input[@type='search' and @placeholder='Поиск должностей или компаний']"))
         assertTrue(driver.pageSource.contains("Xiaomi"))
+    }
+
+    @Test
+    fun `search no company `() {
+        mainPage.logo.click()
+        guestPage.search.click()
+        WebDriverWait(driver, 5).until(ExpectedConditions.titleContains("Вакансии"))
+        val searchField =
+            driver.findElement(By.xpath("//input[@type='search' and @placeholder='Поиск должностей или компаний']"))
+        searchField.sendKeys("asadwqdwqasdsadasdasaas" + Keys.ENTER)
+
+        val searchedPageField =
+            driver.findElement(By.xpath("//input[@type='search' and @placeholder='Поиск должностей или компаний']"))
+        val field = driver.findElement(By.xpath("//main")).text
+        assertFalse(field.contains("asadwqdwqasdsadasdasaas"))
     }
 
     @Test

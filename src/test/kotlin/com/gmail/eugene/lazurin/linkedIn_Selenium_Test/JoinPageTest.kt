@@ -26,10 +26,10 @@ class JoinPageTest {
         joinPage = JoinPage(driver)
     }
 
-//    @AfterEach
-//    fun tearDown() {
-//        driver.quit()
-//    }
+    @AfterEach
+    fun tearDown() {
+        driver.quit()
+    }
 
     @Test
     fun reg() {
