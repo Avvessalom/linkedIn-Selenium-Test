@@ -1,5 +1,3 @@
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FAvvessalom%2FlinkedIn-Selenium-Test.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FAvvessalom%2FlinkedIn-Selenium-Test?ref=badge_shield)
-
 Прецедент             | Поиск по компаниям
 :-----:               | :---- 
 ID                    | 1
@@ -108,7 +106,3 @@ ID                    | 12
 Второстепенные акторы | нет
 Предусловия           | пользователь авторизован
 Основной поток        | Пользователь кликает на кнопку "добавить место учебы", заполняет необоходимую информацию и нажимает сохранить
-
-
-## License
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FAvvessalom%2FlinkedIn-Selenium-Test.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FAvvessalom%2FlinkedIn-Selenium-Test?ref=badge_large)
